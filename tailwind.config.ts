@@ -8,6 +8,19 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        pulse: {
+          "0%, 100%": {
+            opacity: '0',
+          },
+          "50%": {
+            opacity: '1',
+          },
+        },
+      },
+      animation: {
+        "cursor": "pulse 1s step-end infinite"
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
