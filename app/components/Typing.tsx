@@ -82,10 +82,18 @@ const TypingTest = () => {
                                         {word.split("").map((letter, letterIndex) => {
                                             return (
                                                 <>
-                                                    {wordIndex === state.wordIndex && letterIndex === state.letterIndex && <span
-                                                        ref={cursorRef}
-                                                        className="cursor text-4xl">|</span>}
-                                                    <span key={letterIndex} className={` text-3xl font-light ${wordIndex === state.wordIndex && letterIndex === state.letterIndex ? "text-[rgb(0,102,255)]" : wordIndex < state.wordIndex ? (word === state.typedWords[wordIndex] ? "text-green-500" : "text-red-500") : "text-black"}`}>{letter}</span>
+
+                                                    <span key={letterIndex} className={` text-3xl p-0 m-0 font-light ${wordIndex === state.wordIndex && letterIndex === state.letterIndex ? "text-[rgb(0,102,255)]" : wordIndex < state.wordIndex ? (word === state.typedWords[wordIndex] ? "text-green-500" : "text-red-500") : "text-black"}`}>
+                                                        {wordIndex === state.wordIndex && letterIndex === state.letterIndex &&
+
+                                                            <span
+                                                                ref={cursorRef}
+                                                                className="m-[0px] animate-cursor  border-r-2 border-black" />
+
+                                                        }
+                                                        {letter}
+
+                                                    </span>
                                                 </>
                                             );
                                         })}
