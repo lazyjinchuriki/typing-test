@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.cursor {
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  from, to { color: transparent }
+  50% { color: black }
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
