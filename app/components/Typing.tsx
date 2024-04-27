@@ -1,15 +1,28 @@
 "use client"
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { paragraph } from '../utils/paragraph';
+import { unsupportedKeys } from '../utils/unsupportedkeys';
+import { AppContext } from '../context/appContext';
 
-const paragraph = "Everything that you thought had meaning: every hope, dream, or moment of happiness. None of it matters as you lie bleeding out on the battlefield. None of it changes what a speeding rock does to a body, we all die.But does that mean our lives are meaningless?... Does that mean that there was no point in our being born?... Would you say that of our slain comrades?... What about their lives?... Were they meaningless?..They were not! Their memory serves as an example to us all! The courageous fallen! The anguished fallen! Their lives have meaning because we the living refuse to forget them!And as we ride to certain death, we trust our successors to do the same for us! Because my soldiers do not buckle or yield when faced with the cruelty of this world! My soldiers push forward! My soldiers scream out! My soldiers RAAAAAGE!";
-
-
-const unsupportedKeys = ["Shift", "CapsLock", "Control", "Alt", "Tab", "Escape", "Meta", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End", "PageUp", "PageDown", "Insert", "Delete", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "ScrollLock", "Pause"]
 const TypingTest = () => {
+    const { setWpm, setCpm, setAccuracy } = useContext(AppContext);
     const cursorRef = useRef<HTMLSpanElement>(null);
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const [state, setState] = useState<{ wordIndex: number, letterIndex: number, completedWords: string[], typedWords: string[] }>({ wordIndex: 0, letterIndex: 0, completedWords: [], typedWords: [] });
+    const [state, setState] = useState
+        <{
+            letterIndex: number,
+            wordsMap: Map<number, {
+                typedLetter: string,
+                supposedToBe: string
 
+            }>
+        }>({
+            letterIndex: 0,
+            wordsMap: new Map<number, {
+                typedLetter: string,
+                supposedToBe: string
+            }>()
+        });
+    console.log(state.wordsMap)
     useEffect(() => {
         window.addEventListener('keydown', handleKeyPress);
         cursorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
@@ -21,91 +34,64 @@ const TypingTest = () => {
 
 
     const handleKeyPress = (e: KeyboardEvent) => {
-        const words = paragraph.split("");
-        const currentWord = words[state.wordIndex];
-        const currentLetter = currentWord.split("")[state.letterIndex];
-
-        let newTypedWords = [...state.typedWords];
-
         if (unsupportedKeys.includes(e.key)) return;
-
-        if (e.key === 'Backspace') {
-            if (newTypedWords[state.wordIndex - 1]) {
-                newTypedWords[state.wordIndex - 1] = newTypedWords[state.wordIndex - 1].slice(0, -1);
-            }
-            else if (state.wordIndex > 0) {
-                newTypedWords[state.wordIndex - 1] = '';
-            }
-        }
-        else {
-            if (newTypedWords[state.wordIndex]) {
-                newTypedWords[state.wordIndex] += e.key;
-            } else {
-                newTypedWords[state.wordIndex] = e.key;
-            }
-        }
-
-        let newWordIndex = state.wordIndex;
-        let newLetterIndex = state.letterIndex;
+        const letters = paragraph.split("");
+        // we need to implement backspace logic also we need to git what was typed and what was expectyed and based on that show those characters in red and if correct show them as gray
         if (e.key !== 'Backspace') {
-            newLetterIndex++;
-        } else if (newLetterIndex > 0) {
-            newLetterIndex--;
-        } else if (newWordIndex > 0) {
-            newWordIndex--;
-            newLetterIndex = words[newWordIndex].length - 1;
+            setState((prev) => ({
+                ...prev, letterIndex: prev.letterIndex + 1,
+                wordsMap: prev.wordsMap.set(prev.letterIndex, {
+                    typedLetter: e.key,
+                    supposedToBe: letters[prev.letterIndex]
+                })
+            }));
+        } else if (e.key === "Backspace" && state.letterIndex > 0) {
+            setState((prev) => ({
+                ...prev, letterIndex: prev.letterIndex - 1,
+                wordsMap: prev.wordsMap.set(prev.letterIndex, {
+                    typedLetter: "",
+                    supposedToBe: letters[prev.letterIndex]
+                })
+            }));
         }
 
-        let newCompletedWords = [...state.completedWords];
+        //calculating wpm, cpm and accuracy
 
-        if (newLetterIndex === currentWord.length) {
-            newWordIndex++;
-            newLetterIndex = 0;
-            newCompletedWords.push(currentWord);
-        }
 
-        setState({ wordIndex: newWordIndex, letterIndex: newLetterIndex, completedWords: newCompletedWords, typedWords: newTypedWords });
+
     };
     return (
-        <div className="flex justify-center h-screen items-center bg-[rgb(246,246,247)]">
-            <div className='w-screen px-12'>
-                <div
-                    onClick={(e) => {
 
-                    }}
-                    ref={scrollRef} className='shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(0,0,0,0.1)] rounded-lg  h-36 overflow-x-auto scrollbar-hidden flex items-center justify-center'>
-                    <div className='inline-flex items-center justify-center transform translate-x-1/2'>
-                        {paragraph.split("").map((word, wordIndex) => {
-                            return (
-                                <>
-                                    <span key={wordIndex}  >
-                                        {word.split("").map((letter, letterIndex) => {
-                                            return (
-                                                <>
+        <div
+            className='shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(0,0,0,0.1)] rounded-lg  h-36 overflow-x-auto scrollbar-hidden flex items-center justify-center'>
+            <div className='inline-flex items-center justify-center transform translate-x-1/2'>
+                {paragraph.split("").map((letter, letterIndex) => {
+                    return (
+                        <span key={`${letter.concat((letterIndex).toString())}`}>
 
-                                                    <span key={letterIndex} className={` text-3xl p-0 m-0 font-light ${wordIndex === state.wordIndex && letterIndex === state.letterIndex ? "text-[rgb(0,102,255)]" : wordIndex < state.wordIndex ? (word === state.typedWords[wordIndex] ? "text-green-500" : "text-red-500") : "text-black"}`}>
-                                                        {wordIndex === state.wordIndex && letterIndex === state.letterIndex &&
-
-                                                            <span
-                                                                ref={cursorRef}
-                                                                className="m-[0px] animate-cursor  border-r-2 border-black" />
-
-                                                        }
-                                                        {letter}
-
-                                                    </span>
-                                                </>
-                                            );
-                                        })}
-                                    </span>
-                                    {word === " " && <span className='m-2'></span>}
-                                </>
-                            );
-                        })}
-                    </div>
-                </div>
+                            <span className={`text-3xl p-0 m-0 font-light
+                            ${letterIndex === state.letterIndex && "text-blue-500"}
+                            ${letterIndex > state.letterIndex && "text-black"}
+                            ${letterIndex < state.letterIndex &&
+                                    state.wordsMap.get(letterIndex)?.typedLetter === state.wordsMap.get(letterIndex)?.supposedToBe ? "text-gray-500" : "text-red-500"
+                                }
+                             
+                            
+                            
+                            `}
+                            >
+                                {letterIndex === state.letterIndex && <span
+                                    ref={cursorRef}
+                                    className="m-[0px] animate-cursor  border-r-2 border-black"
+                                />}
+                                {letter === " " ? "\u00A0" : letter}
+                            </span>
+                        </span>
+                    );
+                })}
             </div>
-        </div>
+        </div >
+
     );
 };
 

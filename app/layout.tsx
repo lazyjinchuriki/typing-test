@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Merriweather } from "next/font/google";
 import "./globals.css";
+import { AppProvider } from "./context/appContext";
 
 const inter = Inter({ subsets: ["latin"] });
 const merriweather = Merriweather({ weight: ["300", "400", "700", "900"], subsets: ["latin"] });
@@ -16,7 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={merriweather.className}>{children}</body>
+      <body className={merriweather.className}>
+        <AppProvider>
+          {children}
+        </AppProvider>
+      </body>
     </html>
   );
 }
