@@ -22,3 +22,7 @@
 scrollbar-width: none;  /* Firefox */
 }
 
+::selection {
+  background-color: #ffcc00; /* Change this to the color you want */
+  color: #000; /* Change this to the text color you want */
+}
