@@ -9,20 +9,20 @@ const Stats = () => {
         <div className='p-14 flex justify-center gap-4'>
 
             <CircularProgress value={timer} size={120} strokeWidth={5} >
-                <h1 className=' text-4xl font-bold text-center'>{timer}</h1>
-                <h6 className='text-sm text-center font-light'>seconds</h6>
+                <h1 className=' text-4xl font-bold text-center text-[rgb(27,27,32)]'>{timer}</h1>
+                <h6 className='text-sm text-center font-light text-[rgb(27,27,32)]'>seconds</h6>
             </CircularProgress>
             <div className='w-28 flex flex-col justify-center bg-white rounded-full'>
-                <h1 className='text-4xl font-bold text-center'>{wpm}</h1>
-                <h6 className='text-sm text-center font-light'>words/min</h6>
+                <h1 className='text-4xl font-bold text-center text-[rgb(27,27,32)]'>{wpm}</h1>
+                <h6 className='text-sm text-center font-light text-[rgb(27,27,32)]'>words/min</h6>
             </div>
             <div className='w-28 flex flex-col justify-center bg-white rounded-full'>
-                <h1 className='text-4xl font-bold text-center'>{cpm}</h1>
-                <h6 className='text-sm text-center font-light'>chars/min</h6>
+                <h1 className='text-4xl font-bold text-center text-[rgb(27,27,32)]'>{cpm}</h1>
+                <h6 className='text-sm text-center font-light text-[rgb(27,27,32)]'>chars/min</h6>
             </div>
             <div className='w-28 flex flex-col justify-center bg-white rounded-full'>
-                <h1 className='text-4xl font-bold text-center'>{accuracy}</h1>
-                <h6 className='text-sm text-center font-light'>% accuracy</h6>
+                <h1 className='text-4xl font-bold text-center text-[rgb(27,27,32)]'>{accuracy}</h1>
+                <h6 className='text-sm text-center font-light text-[rgb(27,27,32)]'>% accuracy</h6>
             </div>
 
         </div>

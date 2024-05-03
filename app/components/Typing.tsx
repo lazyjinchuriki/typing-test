@@ -4,10 +4,20 @@ import { paragraph } from '../utils/paragraph';
 import { unsupportedKeys } from '../utils/unsupportedkeys';
 import { AppContext } from '../context/appContext';
 import { Merriweather } from 'next/font/google';
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
 const merriweather = Merriweather({ weight: ["300", "400", "700", "900"], subsets: ["latin"] });
 const TypingTest = () => {
 
-    const { setWpm, setCpm, setAccuracy, setTimer, timer } = useContext(AppContext);
+    const { setWpm, setCpm, setAccuracy, setTimer, timer, wpm, cpm, accuracy } = useContext(AppContext);
     const [startedTyping, setStartedTyping] = useState<boolean>(false);
     const cursorRef = useRef<HTMLSpanElement>(null);
     const [state, setState] = useState
@@ -25,21 +35,12 @@ const TypingTest = () => {
                 supposedToBe: string
             }>()
         });
-    console.log(state.wordsMap)
+    //console.log(state.wordsMap)
+    const [openDialog, setOpenDialog] = useState(false);
     useEffect(() => {
-        if (timer <= 0) {
+        if (timer === 0) {
+            setOpenDialog(true);
             setStartedTyping(false);
-            setState({
-                letterIndex: 0,
-                wordsMap: new Map<number, {
-                    typedLetter: string,
-                    supposedToBe: string
-                }>()
-            });
-            setWpm(0);
-            setCpm(0);
-            setAccuracy(100);
-            setTimer(60);
         }
         window.addEventListener('keydown', handleKeyPress);
         cursorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
@@ -67,6 +68,23 @@ const TypingTest = () => {
         if (!startedTyping) {
             setStartedTyping(true);
         }
+
+
+        //calculating wpm, cpm and accuracy
+        let typedLetters = Array.from(state.wordsMap.values()).map((letter) => letter.typedLetter);
+        let typedWords = typedLetters.join("").split(" ").filter((word) => word !== "");
+        let supposedToBeLetter = Array.from(state.wordsMap.values()).map((letter) => letter.supposedToBe);
+        let supposedToBeWords = supposedToBeLetter.join("").split(" ").filter((word) => word !== "")
+        let correctWords = supposedToBeWords.filter((word, index) => word === typedWords[index]);
+
+        let accuracy = supposedToBeWords.length > 0 ? Math.floor((correctWords.length / supposedToBeWords.length) * 100) : 0;
+
+        console.log(typedWords, supposedToBeWords, correctWords)
+        if (e.key === " ") {
+            setWpm(Math.floor(correctWords.length));
+            setCpm(Math.floor(correctWords.join("").length));
+            setAccuracy(accuracy);
+        }
         if (e.key !== 'Backspace') {
             setState((prev) => ({
                 ...prev, letterIndex: prev.letterIndex + 1,
@@ -85,44 +103,58 @@ const TypingTest = () => {
             }));
         }
 
-        //calculating wpm, cpm and accuracy
-        const typedLetters = Array.from(state.wordsMap.values());
-        const correctLetters = typedLetters.filter((letter) => letter.typedLetter === letter.supposedToBe);
-        const wpm = Math.floor(correctLetters.length / 5);
-        const cpm = correctLetters.length;
-        const accuracy = Math.floor((correctLetters.length / typedLetters.length) * 100);
-        setWpm(wpm);
-        setCpm(cpm);
-        setAccuracy(accuracy);
+
     };
     return (
+        <>
+            <div
+                className='shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(0,0,0,0.1)] rounded-lg  h-36 overflow-x-auto scrollbar-hidden flex items-center justify-center'>
+                <div className='inline-flex items-center justify-center transform translate-x-1/2'>
+                    {paragraph.split("").map((letter, letterIndex) => {
+                        return (
+                            <span key={`${letter.concat((letterIndex).toString())}`}>
 
-        <div
-            className='shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(0,0,0,0.1)] rounded-lg  h-36 overflow-x-auto scrollbar-hidden flex items-center justify-center'>
-            <div className='inline-flex items-center justify-center transform translate-x-1/2'>
-                {paragraph.split("").map((letter, letterIndex) => {
-                    return (
-                        <span key={`${letter.concat((letterIndex).toString())}`}>
-
-                            <span className={`text-3xl p-0 m-0 font-thin ${merriweather.className}
-                            ${letterIndex === state.letterIndex && "text-blue-500"}
-                            ${letterIndex === state.letterIndex ? "text-blue-500" : letterIndex > state.letterIndex ? "text-black" : letterIndex < state.letterIndex &&
-                                    state.wordsMap.get(letterIndex)?.typedLetter === state.wordsMap.get(letterIndex)?.supposedToBe ? "text-[rgb(202,202,205)]" : "text-red-500"
-                                }
+                                <span className={`text-3xl p-0 m-0 font-thin ${merriweather.className}
+                            ${letterIndex === state.letterIndex ? "text-blue-500" : letterIndex > state.letterIndex ? "text-[rgb(27,27,32)]" : letterIndex < state.letterIndex &&
+                                        state.wordsMap.get(letterIndex)?.typedLetter === state.wordsMap.get(letterIndex)?.supposedToBe ? "text-[rgb(202,202,205)]" : "text-red-500"
+                                    }
                             `}
-                            >
-                                {letterIndex === state.letterIndex && <span
-                                    ref={cursorRef}
-                                    className="m-[0px] animate-cursor  border-r-2 border-black"
-                                />}
-                                {letter === " " ? "\u00A0" : letter}
+                                >
+                                    {letterIndex === state.letterIndex && <span
+                                        ref={cursorRef}
+                                        className="m-[0px] animate-cursor  border-r-2 border-[rgb(27,27,32)]"
+                                    />}
+                                    {letter === " " ? "\u00A0" : letter}
+                                </span>
                             </span>
-                        </span>
-                    );
-                })}
-            </div>
-        </div >
+                        );
+                    })}
+                </div>
+            </div >
 
+            <Dialog open={openDialog} onOpenChange={() => {
+                setState({
+                    letterIndex: 0,
+                    wordsMap: new Map<number, {
+                        typedLetter: string,
+                        supposedToBe: string
+                    }>()
+                });
+                setOpenDialog(false);
+                setTimer(60);
+
+            }}>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle className='text-xl'>Your time is up.</DialogTitle>
+                        <DialogDescription>
+                            Well...Your typing speed is <b className='text-black'>{wpm} words per minute</b> and <b className='text-black'>{cpm} characters per minute</b> with an accuracy of <b className='text-black'>{accuracy}%</b>. Keep practicing!
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+
+        </>
     );
 };
 

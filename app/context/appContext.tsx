@@ -5,7 +5,7 @@ export const AppContext = createContext({
     setWpm: (wpm: number) => { },
     cpm: 0,
     setCpm: (cpm: number) => { },
-    accuracy: 100,
+    accuracy: 0,
     setAccuracy: (accuracy: number) => { },
     timer: 60,
     setTimer: (timer: number | ((prevTimer: number) => number)) => { },
@@ -17,7 +17,7 @@ interface AppProviderProps {
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     const [wpm, setWpm] = useState<number>(0);
     const [cpm, setCpm] = useState<number>(0);
-    const [accuracy, setAccuracy] = useState<number>(100);
+    const [accuracy, setAccuracy] = useState<number>(0);
     const [timer, setTimer] = useState<number>(60);
     const value = useMemo(
         () => ({
