@@ -38,16 +38,16 @@ const TypingTest = () => {
     //console.log(state.wordsMap)
     const [openDialog, setOpenDialog] = useState(false);
     useEffect(() => {
-        if (timer === 0) {
+        if (timer <= 0) {
             setOpenDialog(true);
             setStartedTyping(false);
+        } else {
+            window.addEventListener('keydown', handleKeyPress);
+            cursorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+            return () => {
+                window.removeEventListener('keydown', handleKeyPress);
+            };
         }
-        window.addEventListener('keydown', handleKeyPress);
-        cursorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-        return () => {
-            window.removeEventListener('keydown', handleKeyPress);
-        };
-        //reduce the timer by 1 second until it reaches 0
     }, [state, timer]);
 
     useEffect(() => {
@@ -142,6 +142,9 @@ const TypingTest = () => {
                 });
                 setOpenDialog(false);
                 setTimer(60);
+                setWpm(0);
+                setCpm(0);
+                setAccuracy(0);
 
             }}>
                 <DialogContent className="sm:max-w-[425px]">
