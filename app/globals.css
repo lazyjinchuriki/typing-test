@@ -1,100 +1,465 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-  @layer base {
-    :root {
-      --background: 0 0% 100%;
-      --foreground: 222.2 84% 4.9%;
-
-      --card: 0 0% 100%;
-      --card-foreground: 222.2 84% 4.9%;
-
-      --popover: 0 0% 100%;
-      --popover-foreground: 222.2 84% 4.9%;
-
-      --primary: 222.2 47.4% 11.2%;
-      --primary-foreground: 210 40% 98%;
-
-      --secondary: 210 40% 96.1%;
-      --secondary-foreground: 222.2 47.4% 11.2%;
-
-      --muted: 210 40% 96.1%;
-      --muted-foreground: 215.4 16.3% 46.9%;
-
-      --accent: 210 40% 96.1%;
-      --accent-foreground: 222.2 47.4% 11.2%;
-
-      --destructive: 0 84.2% 60.2%;
-      --destructive-foreground: 210 40% 98%;
-
-      --border: 214.3 31.8% 91.4%;
-      --input: 214.3 31.8% 91.4%;
-      --ring: 222.2 84% 4.9%;
-
-      --radius: 0.5rem;
-    }
-
-    .dark {
-      --background: 222.2 84% 4.9%;
-      --foreground: 210 40% 98%;
-
-      --card: 222.2 84% 4.9%;
-      --card-foreground: 210 40% 98%;
-
-      --popover: 222.2 84% 4.9%;
-      --popover-foreground: 210 40% 98%;
-
-      --primary: 210 40% 98%;
-      --primary-foreground: 222.2 47.4% 11.2%;
-
-      --secondary: 217.2 32.6% 17.5%;
-      --secondary-foreground: 210 40% 98%;
-
-      --muted: 217.2 32.6% 17.5%;
-      --muted-foreground: 215 20.2% 65.1%;
-
-      --accent: 217.2 32.6% 17.5%;
-      --accent-foreground: 210 40% 98%;
-
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 210 40% 98%;
-
-      --border: 217.2 32.6% 17.5%;
-      --input: 217.2 32.6% 17.5%;
-      --ring: 212.7 26.8% 83.9%;
-    }
+@layer base {
+  :root {
+    --font-space-grotesk: "Space Grotesk", sans-serif;
+    --font-jetbrains-mono: "JetBrains Mono", monospace;
   }
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
+  * {
+    @apply border-border;
   }
 
-  .cursor {
-    animation: blink 1s step-end infinite;
+  body {
+    font-family: var(--font-space-grotesk);
   }
-  @keyframes blink {
-    from, to { color: transparent }
-    50% { color: black }
+
+  .font-mono {
+    font-family: var(--font-jetbrains-mono);
   }
-  
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .scrollbar-hidden::-webkit-scrollbar {
-    display: none;
+
+  /* Matrix Theme - Green Digital */
+  .theme-matrix {
+    --primary-50: #f0fdf4;
+    --primary-100: #dcfce7;
+    --primary-200: #bbf7d0;
+    --primary-300: #86efac;
+    --primary-400: #4ade80;
+    --primary-500: #22c55e;
+    --primary-600: #16a34a;
+    --primary-700: #15803d;
+    --primary-800: #166534;
+    --primary-900: #14532d;
+
+    --secondary-50: #f0fdf4;
+    --secondary-100: #dcfce7;
+    --secondary-200: #bbf7d0;
+    --secondary-300: #86efac;
+    --secondary-400: #4ade80;
+    --secondary-500: #22c55e;
+    --secondary-600: #16a34a;
+    --secondary-700: #15803d;
+    --secondary-800: #166534;
+    --secondary-900: #14532d;
+
+    --accent-50: #ecfdf5;
+    --accent-100: #d1fae5;
+    --accent-200: #a7f3d0;
+    --accent-300: #6ee7b7;
+    --accent-400: #34d399;
+    --accent-500: #10b981;
+    --accent-600: #059669;
+    --accent-700: #047857;
+    --accent-800: #065f46;
+    --accent-900: #064e3b;
+
+    --bg-50: #f9fafb;
+    --bg-100: #f3f4f6;
+    --bg-200: #e5e7eb;
+    --bg-300: #d1d5db;
+    --bg-400: #9ca3af;
+    --bg-500: #6b7280;
+    --bg-600: #4b5563;
+    --bg-700: #374151;
+    --bg-800: #1f2937;
+    --bg-900: #111827;
+
+    --surface-50: #f9fafb;
+    --surface-100: #f3f4f6;
+    --surface-200: #e5e7eb;
+    --surface-300: #d1d5db;
+    --surface-400: #9ca3af;
+    --surface-500: #6b7280;
+    --surface-600: #4b5563;
+    --surface-700: #374151;
+    --surface-800: #1f2937;
+    --surface-900: #111827;
+
+    --text-50: #f9fafb;
+    --text-100: #f3f4f6;
+    --text-200: #e5e7eb;
+    --text-300: #d1d5db;
+    --text-400: #9ca3af;
+    --text-500: #6b7280;
+    --text-600: #4b5563;
+    --text-700: #374151;
+    --text-800: #1f2937;
+    --text-900: #111827;
   }
-  
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .scrollbar-hidden {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+
+  /* Sage Theme - Natural Earth */
+  .theme-sage {
+    --primary-50: #f0f9ff;
+    --primary-100: #e0f2fe;
+    --primary-200: #bae6fd;
+    --primary-300: #7dd3fc;
+    --primary-400: #38bdf8;
+    --primary-500: #0ea5e9;
+    --primary-600: #0284c7;
+    --primary-700: #0369a1;
+    --primary-800: #075985;
+    --primary-900: #0c4a6e;
+
+    --secondary-50: #f0fdf4;
+    --secondary-100: #dcfce7;
+    --secondary-200: #bbf7d0;
+    --secondary-300: #86efac;
+    --secondary-400: #4ade80;
+    --secondary-500: #22c55e;
+    --secondary-600: #16a34a;
+    --secondary-700: #15803d;
+    --secondary-800: #166534;
+    --secondary-900: #14532d;
+
+    --accent-50: #fefce8;
+    --accent-100: #fef9c3;
+    --accent-200: #fef08a;
+    --accent-300: #fde047;
+    --accent-400: #facc15;
+    --accent-500: #eab308;
+    --accent-600: #ca8a04;
+    --accent-700: #a16207;
+    --accent-800: #854d0e;
+    --accent-900: #713f12;
+
+    --bg-50: #fafaf9;
+    --bg-100: #f5f5f4;
+    --bg-200: #e7e5e4;
+    --bg-300: #d6d3d1;
+    --bg-400: #a8a29e;
+    --bg-500: #78716c;
+    --bg-600: #57534e;
+    --bg-700: #44403c;
+    --bg-800: #292524;
+    --bg-900: #1c1917;
+
+    --surface-50: #f8fafc;
+    --surface-100: #f1f5f9;
+    --surface-200: #e2e8f0;
+    --surface-300: #cbd5e1;
+    --surface-400: #94a3b8;
+    --surface-500: #64748b;
+    --surface-600: #475569;
+    --surface-700: #334155;
+    --surface-800: #1e293b;
+    --surface-900: #0f172a;
+
+    --text-50: #f8fafc;
+    --text-100: #f1f5f9;
+    --text-200: #e2e8f0;
+    --text-300: #cbd5e1;
+    --text-400: #94a3b8;
+    --text-500: #64748b;
+    --text-600: #475569;
+    --text-700: #334155;
+    --text-800: #1e293b;
+    --text-900: #0f172a;
   }
-  
-  ::selection {
-    background-color: #ffcc00; /* Change this to the color you want */
-    color: #000; /* Change this to the text color you want */
+
+  /* Mocha Theme - Warm Coffee */
+  .theme-mocha {
+    --primary-50: #fef7ed;
+    --primary-100: #fdedd3;
+    --primary-200: #fbd7a5;
+    --primary-300: #f8bc6d;
+    --primary-400: #f59e0b;
+    --primary-500: #d97706;
+    --primary-600: #b45309;
+    --primary-700: #92400e;
+    --primary-800: #78350f;
+    --primary-900: #451a03;
+
+    --secondary-50: #fdf4ff;
+    --secondary-100: #fae8ff;
+    --secondary-200: #f5d0fe;
+    --secondary-300: #f0abfc;
+    --secondary-400: #e879f9;
+    --secondary-500: #d946ef;
+    --secondary-600: #c026d3;
+    --secondary-700: #a21caf;
+    --secondary-800: #86198f;
+    --secondary-900: #701a75;
+
+    --accent-50: #fff7ed;
+    --accent-100: #ffedd5;
+    --accent-200: #fed7aa;
+    --accent-300: #fdba74;
+    --accent-400: #fb923c;
+    --accent-500: #f97316;
+    --accent-600: #ea580c;
+    --accent-700: #c2410c;
+    --accent-800: #9a3412;
+    --accent-900: #7c2d12;
+
+    --bg-50: #fafaf9;
+    --bg-100: #f5f5f4;
+    --bg-200: #e7e5e4;
+    --bg-300: #d6d3d1;
+    --bg-400: #a8a29e;
+    --bg-500: #78716c;
+    --bg-600: #57534e;
+    --bg-700: #44403c;
+    --bg-800: #292524;
+    --bg-900: #1c1917;
+
+    --surface-50: #fafaf9;
+    --surface-100: #f5f5f4;
+    --surface-200: #e7e5e4;
+    --surface-300: #d6d3d1;
+    --surface-400: #a8a29e;
+    --surface-500: #78716c;
+    --surface-600: #57534e;
+    --surface-700: #44403c;
+    --surface-800: #292524;
+    --surface-900: #1c1917;
+
+    --text-50: #fafaf9;
+    --text-100: #f5f5f4;
+    --text-200: #e7e5e4;
+    --text-300: #d6d3d1;
+    --text-400: #a8a29e;
+    --text-500: #78716c;
+    --text-600: #57534e;
+    --text-700: #44403c;
+    --text-800: #292524;
+    --text-900: #1c1917;
   }
+
+  /* Cyber Theme - Neon Future */
+  .theme-cyber {
+    --primary-50: #fdf4ff;
+    --primary-100: #fae8ff;
+    --primary-200: #f5d0fe;
+    --primary-300: #f0abfc;
+    --primary-400: #e879f9;
+    --primary-500: #d946ef;
+    --primary-600: #c026d3;
+    --primary-700: #a21caf;
+    --primary-800: #86198f;
+    --primary-900: #701a75;
+
+    --secondary-50: #f0f9ff;
+    --secondary-100: #e0f2fe;
+    --secondary-200: #bae6fd;
+    --secondary-300: #7dd3fc;
+    --secondary-400: #38bdf8;
+    --secondary-500: #0ea5e9;
+    --secondary-600: #0284c7;
+    --secondary-700: #0369a1;
+    --secondary-800: #075985;
+    --secondary-900: #0c4a6e;
+
+    --accent-50: #fef7ed;
+    --accent-100: #fdedd3;
+    --accent-200: #fbd7a5;
+    --accent-300: #f8bc6d;
+    --accent-400: #f59e0b;
+    --accent-500: #d97706;
+    --accent-600: #b45309;
+    --accent-700: #92400e;
+    --accent-800: #78350f;
+    --accent-900: #451a03;
+
+    --bg-50: #fafafa;
+    --bg-100: #f4f4f5;
+    --bg-200: #e4e4e7;
+    --bg-300: #d4d4d8;
+    --bg-400: #a1a1aa;
+    --bg-500: #71717a;
+    --bg-600: #52525b;
+    --bg-700: #3f3f46;
+    --bg-800: #27272a;
+    --bg-900: #18181b;
+
+    --surface-50: #fafafa;
+    --surface-100: #f4f4f5;
+    --surface-200: #e4e4e7;
+    --surface-300: #d4d4d8;
+    --surface-400: #a1a1aa;
+    --surface-500: #71717a;
+    --surface-600: #52525b;
+    --surface-700: #3f3f46;
+    --surface-800: #27272a;
+    --surface-900: #18181b;
+
+    --text-50: #fafafa;
+    --text-100: #f4f4f5;
+    --text-200: #e4e4e7;
+    --text-300: #d4d4d8;
+    --text-400: #a1a1aa;
+    --text-500: #71717a;
+    --text-600: #52525b;
+    --text-700: #3f3f46;
+    --text-800: #27272a;
+    --text-900: #18181b;
+  }
+
+  /* Coral Theme - Ocean Sunset */
+  .theme-coral {
+    --primary-50: #fef2f2;
+    --primary-100: #fee2e2;
+    --primary-200: #fecaca;
+    --primary-300: #fca5a5;
+    --primary-400: #f87171;
+    --primary-500: #ef4444;
+    --primary-600: #dc2626;
+    --primary-700: #b91c1c;
+    --primary-800: #991b1b;
+    --primary-900: #7f1d1d;
+
+    --secondary-50: #fdf2f8;
+    --secondary-100: #fce7f3;
+    --secondary-200: #fbcfe8;
+    --secondary-300: #f9a8d4;
+    --secondary-400: #f472b6;
+    --secondary-500: #ec4899;
+    --secondary-600: #db2777;
+    --secondary-700: #be185d;
+    --secondary-800: #9d174d;
+    --secondary-900: #831843;
+
+    --accent-50: #fef7ed;
+    --accent-100: #fdedd3;
+    --accent-200: #fbd7a5;
+    --accent-300: #f8bc6d;
+    --accent-400: #f59e0b;
+    --accent-500: #d97706;
+    --accent-600: #b45309;
+    --accent-700: #92400e;
+    --accent-800: #78350f;
+    --accent-900: #451a03;
+
+    --bg-50: #fafafa;
+    --bg-100: #f4f4f5;
+    --bg-200: #e4e4e7;
+    --bg-300: #d4d4d8;
+    --bg-400: #a1a1aa;
+    --bg-500: #71717a;
+    --bg-600: #52525b;
+    --bg-700: #3f3f46;
+    --bg-800: #27272a;
+    --bg-900: #18181b;
+
+    --surface-50: #fafafa;
+    --surface-100: #f4f4f5;
+    --surface-200: #e4e4e7;
+    --surface-300: #d4d4d8;
+    --surface-400: #a1a1aa;
+    --surface-500: #71717a;
+    --surface-600: #52525b;
+    --surface-700: #3f3f46;
+    --surface-800: #27272a;
+    --surface-900: #18181b;
+
+    --text-50: #fafafa;
+    --text-100: #f4f4f5;
+    --text-200: #e4e4e7;
+    --text-300: #d4d4d8;
+    --text-400: #a1a1aa;
+    --text-500: #71717a;
+    --text-600: #52525b;
+    --text-700: #3f3f46;
+    --text-800: #27272a;
+    --text-900: #18181b;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-800);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-600);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--surface-500);
+}
+
+/* Selection styling */
+::selection {
+  background: var(--primary-500);
+  color: white;
+  opacity: 0.3;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow,
+    transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Focus styles */
+button:focus-visible,
+input:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-500);
+}
+
+/* Backdrop blur fallback */
+@supports not (backdrop-filter: blur(10px)) {
+  .backdrop-blur-sm {
+    background-color: rgba(0, 0, 0, 0.95);
+  }
+}
+
+/* Loading animations */
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes scan {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.matrix-rain {
+  animation: matrix-rain 3s linear infinite;
+}
+
+@keyframes typing-cursor {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.typing-cursor {
+  animation: typing-cursor 1s ease-in-out infinite;
+}
