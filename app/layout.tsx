@@ -1,29 +1,36 @@
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import "./globals.css";
-import { AppProvider } from "./context/appContext";
+import type React from "react"
+import type { Metadata } from "next"
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google"
+import "./globals.css"
+import { AppProvider } from "./context/appContext"
 
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-});
+  variable: "--font-space-grotesk",
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+})
+
 export const metadata: Metadata = {
-  title: "Typing Test",
-  description: "A Free Typing Test without any ads",
-  keywords:
-    "typing test, typing speed test, typing test online, typing test wpm, typing test cpm, typing test accuracy,",
-};
+  title: "funkytype - Modern Typing Test",
+  description: "A funky, modern typing test inspired by Monkeytype. Test your typing speed and accuracy with style.",
+  keywords: "typing test, typing speed, WPM, accuracy, monkeytype, funky",
+    generator: 'v0.dev'
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={poppins.className}>
+    <html lang="en" suppressHydrationWarning className="dark">
+      <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <AppProvider>{children}</AppProvider>
       </body>
     </html>
-  );
+  )
 }
